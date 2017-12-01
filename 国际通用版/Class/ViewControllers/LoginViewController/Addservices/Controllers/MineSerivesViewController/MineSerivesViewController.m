@@ -14,8 +14,9 @@
 #import "CCLocationManager.h"
 #import "WeatherView.h"
 #import "FirstUserAlertView.h"
+#import "AllServicesViewController.h"
 
-@interface MineSerivesViewController ()<UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout , HelpFunctionDelegate , SendServiceModelToParentVCDelegate , SendServiceModelToParentVCDelegate ,
+@interface MineSerivesViewController ()<UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout , SendServiceModelToParentVCDelegate , SendServiceModelToParentVCDelegate ,
     UIGestureRecognizerDelegate>
 @property (nonatomic , strong) UICollectionView *collectionView;
 @property (nonatomic , strong) WeatherView *weatherView;
@@ -24,7 +25,7 @@
 @property (nonatomic , strong) NSMutableDictionary *wearthDic;
 
 @property (nonatomic , strong) UIViewController *childViewController;
-@property (nonatomic , strong) NSMutableArray *haveArray;
+@property (nonatomic , strong) NSMutableArray *serviceAry;
 @property (nonatomic , copy) NSString *userSn;
 @property (nonatomic , strong) ServicesModel *serviceModel;
 
@@ -34,18 +35,24 @@
 @end
 
 @implementation MineSerivesViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"f2f4fb"];
 
     [self setOther];
     [self setNav];
+    
+    [self setData];
+    
     [self setUI];
     [self setAlertView];
 }
 
 - (void)setOther {
     [kStanderDefault setObject:@"YES" forKey:@"Login"];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(bindService) name:BindService object:nil];
     
     if ([kStanderDefault objectForKey:@"userSn"] && kSocketTCP.socket.isConnected == NO) {
         self.userSn = [kStanderDefault objectForKey:@"userSn"];
@@ -56,7 +63,7 @@
 }
 
 - (void)setNav {
-    self.navigationItem.title = @"联侠";
+    self.navigationItem.title = @"达飞淼";
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(addSerViceAtcion) image:@"addService_high" highImage:nil];
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(backAtcion) image:nil highImage:nil];
     self.navigationController.
@@ -89,33 +96,41 @@
     if (self.userSn && self.serviceModel) {
         [kSocketTCP sendDataToHost:[NSString stringWithFormat:@"HM%@%@%@Q#" , self.userSn , self.serviceModel.devTypeSn , self.serviceModel.devSn] andType:kQuite andIsNewOrOld:nil];
     }
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
+    for (int i = 0; i < self.serviceAry.count; i++) {
+        MineServiceCollectionViewCell *cell = (MineServiceCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        cell.selectedImage.hidden = YES;
+    }
+}
+
+#pragma mark - 绑定成功刷新数据
+- (void)bindService {
+    [self setData];
+}
+
+#pragma mark - 请求当前账号绑定的设备
+- (void)setData {
     
     NSDictionary *parameters = @{@"userSn": [kStanderDefault objectForKey:@"userSn"]};
     [kNetWork requestGETUrlString:kQueryTheUserdevice parameters:parameters isSuccess:^(NSDictionary * _Nullable responseObject) {
         NSInteger state = [responseObject[@"state"] integerValue];
-        if (state != 0) {
-            return ;
-        }
-        
-        if ([responseObject[@"data"] isKindOfClass:[NSNull class]]) {
+        NSArray *dataArray = responseObject[@"data"];
+        if ([dataArray isKindOfClass:[NSNull class]] || dataArray.count == 0 || state != 0) {
             self.markView.hidden = NO;
             return ;
         }
-        NSArray *dataArray = responseObject[@"data"];
-        if (dataArray.count == 0) return ;
-
-        [self.haveArray removeAllObjects];
-        
+        [self.serviceAry removeAllObjects];
         [dataArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSDictionary *dic = obj;
             
             ServicesModel *serviceModel = [[ServicesModel alloc]init];
-            [serviceModel setValuesForKeysWithDictionary:dic];
-            serviceModel.userDeviceID = [obj[@"id"] integerValue];
-            serviceModel.ifConn = [obj[@"ifConn"] integerValue];
-            [_haveArray addObject:serviceModel];
-            
+            [serviceModel yy_modelSetWithDictionary:dic];
+            [self.serviceAry addObject:serviceModel];
         }];
         
         [kStanderDefault setObject:@"YES" forKey:@"isHaveService"];
@@ -124,22 +139,10 @@
     } failure:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    for (int i = 0; i < self.haveArray.count; i++) {
-        MineServiceCollectionViewCell *cell = (MineServiceCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-        cell.selectedImage.hidden = YES;
-    }
-}
-
-
-
 
 #pragma mark - 设置UI界面
 - (void)setUI{
     
-    //0.天气信息块
     UIImageView *backImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"weather_bg"]];
     [self.view addSubview:backImageView];
     backImageView.frame = CGRectMake(0, 0, kScreenW, kScreenW / 2);
@@ -156,11 +159,9 @@
     
     [self getWeatherDic:self.wearthDic];
     
-    //1.CollectionView
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake((kScreenW - kScreenW * 3 / 25) / 2, kScreenW / 2.6);
     layout.sectionInset = UIEdgeInsetsMake(kScreenW / 25, kScreenW / 25, kScreenW / 25, kScreenW / 25);
-    //2.初始化collectionView
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kScreenW / 2 - kScreenW / 10, kScreenW, kScreenH - kScreenW / 2 - kNavibarH - kTabbarH + kScreenW / 10) collectionViewLayout:layout];
     [self.view insertSubview:self.collectionView atIndex:0];
     self.collectionView.backgroundColor = [UIColor colorWithHexString:@"f2f4fb"];
@@ -175,12 +176,10 @@
     swipeGesture1.direction = UISwipeGestureRecognizerDirectionLeft;
     [self.view addGestureRecognizer:swipeGesture1];
     
-    
     UIView *markView = [[UIView alloc]initWithFrame:self.collectionView.frame];
-    [self.view addSubview:markView];
     markView.backgroundColor = [UIColor colorWithHexString:@"f6f6f6"];
     self.markView = markView;
-    
+    [self.view insertSubview:markView belowSubview:backImageView];
     
     UILabel *lable = [UILabel creatLableWithTitle:@"暂未添加任何设备" andSuperView:markView andFont:k17 andTextAligment:NSTextAlignmentCenter];
     [lable mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -202,8 +201,6 @@
     
     [button addTarget:self action:@selector(addSerViceAtcion) forControlEvents:UIControlEventTouchUpInside];
     self.markView.hidden = YES;
-    
-    
     
 }
 
@@ -238,7 +235,9 @@
             [kStanderDefault setObject:responseObject forKey:@"wearthDic"];
             self.wearthDic = [NSMutableDictionary dictionaryWithDictionary:responseObject];
             [self getWeatherDic:self.wearthDic];
-        } failure:nil];
+        } failure:^(NSError * _Nonnull error) {
+            [kNetWork noNetWork];
+        }];
         
     }];
 }
@@ -270,9 +269,15 @@
     self.serviceModel = serviceModel;
 }
 
+- (void)whetherDelegateService:(BOOL)delateService {
+    if (delateService) {
+        [self setData];
+    }
+}
+
 #pragma mark - 添加设备的点击事件
 - (void)addSerViceAtcion{
-    SetServicesViewController *setServiceVC = [[SetServicesViewController alloc]init];
+    AllServicesViewController *setServiceVC = [[AllServicesViewController alloc]init];
     setServiceVC.navigationItem.title = @"添加设备";
     [self.navigationController pushViewController:setServiceVC animated:YES];
 }
@@ -284,7 +289,7 @@
 
 #pragma mark - 每个分区rows的个数
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.haveArray.count;
+    return self.serviceAry.count;
 }
 
 #pragma mark - 生成items
@@ -292,7 +297,7 @@
    MineServiceCollectionViewCell *cell = (MineServiceCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellId" forIndexPath:indexPath];
     
     ServicesModel *model1 = [[ServicesModel alloc]init];
-    model1 = self.haveArray[indexPath.row];
+    model1 = self.serviceAry[indexPath.row];
     cell.indexPath = indexPath;
     cell.serviceModel = model1;
     return cell;
@@ -317,23 +322,23 @@
     cell.selectedImage.hidden = NO;
     
     ServicesModel *model = [[ServicesModel alloc]init];
-    model = self.haveArray[indexPath.row];
+    model = self.serviceAry[indexPath.row];
     
     [kApplicate initServiceModel:model];
     kSocketTCP.serviceModel = model;
     [kSocketTCP sendDataToHost:[NSString stringWithFormat:@"HM%@%@%@N#" , [kStanderDefault objectForKey:@"userSn"] , model.devTypeSn , model.devSn] andType:kAddService andIsNewOrOld:nil];
     
     HTMLBaseViewController *htmlVC = [[HTMLBaseViewController alloc]init];
-    htmlVC.sendServiceModelToParentVCDelegate = self;
+    htmlVC.delegate = self;
     htmlVC.serviceModel = model;
     [self.navigationController pushViewController:htmlVC animated:YES];
 }
 
-- (NSMutableArray *)haveArray {
-    if (!_haveArray) {
-        _haveArray = [NSMutableArray array];
+- (NSMutableArray *)serviceAry {
+    if (!_serviceAry) {
+        _serviceAry = [NSMutableArray array];
     }
-    return _haveArray;
+    return _serviceAry;
 }
 
 - (void)setServiceModel:(ServicesModel *)serviceModel {

@@ -109,7 +109,9 @@
     NSDictionary *parameters = @{@"dest":self.phoneNumber , @"bool" : @(0)};
     [kNetWork requestPOSTUrlString:kFaSongDuanXin parameters:parameters isSuccess:^(NSDictionary * _Nullable responseObject) {
         NSLog(@"发送的短信%@" , responseObject);
-    } failure:nil];
+    } failure:^(NSError * _Nonnull error) {
+        [kNetWork noNetWork];
+    }];
     
 }
 

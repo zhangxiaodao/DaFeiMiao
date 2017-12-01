@@ -11,6 +11,17 @@
 		ED1904D81DED2EDF00E34A3E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1904D71DED2EDF00E34A3E /* CoreGraphics.framework */; };
 		ED1904DA1DED2EF500E34A3E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1904D91DED2EF500E34A3E /* UIKit.framework */; };
 		ED1904DC1DED2EFD00E34A3E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED1904DB1DED2EFD00E34A3E /* Foundation.framework */; };
+		ED30B4DE1FD0FD840046720B /* CZNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4DA1FD0FD840046720B /* CZNetworkManager.m */; };
+		ED30B4DF1FD0FD840046720B /* CZPlistTools.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4DC1FD0FD840046720B /* CZPlistTools.m */; };
+		ED30B4FA1FD1020E0046720B /* ChongZhiPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4E41FD1020E0046720B /* ChongZhiPwdViewController.m */; };
+		ED30B4FB1FD1020E0046720B /* ForgetPwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4E61FD1020E0046720B /* ForgetPwdViewController.m */; };
+		ED30B4FD1FD1020E0046720B /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4EE1FD1020E0046720B /* RegisterViewController.m */; };
+		ED30B4FE1FD1020E0046720B /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4F41FD1020E0046720B /* TableViewCell.m */; };
+		ED30B4FF1FD1020E0046720B /* XieYiNeiRongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4F61FD1020E0046720B /* XieYiNeiRongViewController.m */; };
+		ED30B5001FD1020E0046720B /* YinSiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B4F91FD1020E0046720B /* YinSiViewController.m */; };
+		ED30B5031FD106A20046720B /* ZHCTools.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B5011FD106A10046720B /* ZHCTools.m */; };
+		ED30B5141FD135000046720B /* AllServicesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B5111FD135000046720B /* AllServicesCollectionViewCell.m */; };
+		ED30B5151FD135000046720B /* AllServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED30B5131FD135000046720B /* AllServicesViewController.m */; };
 		EDF3DE181FC2720D00BB36BE /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6F471FBAEED100377016 /* AsyncUdpSocket.m */; };
 		EDF3DE1D1FC2851D00BB36BE /* BaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF3DE1B1FC2851C00BB36BE /* BaseTableViewCell.m */; };
 		EDF4B5671DDAF22800E5AED0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EDF4B5661DDAF22800E5AED0 /* main.m */; };
@@ -77,7 +88,6 @@
 		EDFC6EC41FBAEAD100377016 /* PZXVerificationCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6E6F1FBAD84B00377016 /* PZXVerificationCodeView.m */; };
 		EDFC6EC51FBAEB7500377016 /* AlertMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6E6D1FBAD84B00377016 /* AlertMessageView.m */; };
 		EDFC6ECA1FBAEBA700377016 /* AuthcodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6E8A1FBAD84B00377016 /* AuthcodeView.m */; };
-		EDFC6ED41FBAED2E00377016 /* CZNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6D261FBAD84B00377016 /* CZNetworkManager.m */; };
 		EDFC6ED51FBAED4300377016 /* LaunchScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6D2A1FBAD84B00377016 /* LaunchScreenViewController.m */; };
 		EDFC6EDB1FBAEE1E00377016 /* MineSerivesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6D3F1FBAD84B00377016 /* MineSerivesViewController.m */; };
 		EDFC6EDC1FBAEE1E00377016 /* FirstUserAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6D421FBAD84B00377016 /* FirstUserAlertView.m */; };
@@ -133,6 +143,31 @@
 		ED1904D71DED2EDF00E34A3E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		ED1904D91DED2EF500E34A3E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		ED1904DB1DED2EFD00E34A3E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ED30B4D91FD0FD840046720B /* CZNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZNetworkManager.h; sourceTree = "<group>"; };
+		ED30B4DA1FD0FD840046720B /* CZNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZNetworkManager.m; sourceTree = "<group>"; };
+		ED30B4DB1FD0FD840046720B /* CZPlistTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CZPlistTools.h; sourceTree = "<group>"; };
+		ED30B4DC1FD0FD840046720B /* CZPlistTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CZPlistTools.m; sourceTree = "<group>"; };
+		ED30B4DD1FD0FD840046720B /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		ED30B4E31FD1020E0046720B /* ChongZhiPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChongZhiPwdViewController.h; sourceTree = "<group>"; };
+		ED30B4E41FD1020E0046720B /* ChongZhiPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChongZhiPwdViewController.m; sourceTree = "<group>"; };
+		ED30B4E51FD1020E0046720B /* ForgetPwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPwdViewController.h; sourceTree = "<group>"; };
+		ED30B4E61FD1020E0046720B /* ForgetPwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPwdViewController.m; sourceTree = "<group>"; };
+		ED30B4ED1FD1020E0046720B /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		ED30B4EE1FD1020E0046720B /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		ED30B4F31FD1020E0046720B /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		ED30B4F41FD1020E0046720B /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		ED30B4F51FD1020E0046720B /* XieYiNeiRongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XieYiNeiRongViewController.h; sourceTree = "<group>"; };
+		ED30B4F61FD1020E0046720B /* XieYiNeiRongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XieYiNeiRongViewController.m; sourceTree = "<group>"; };
+		ED30B4F81FD1020E0046720B /* YinSiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YinSiViewController.h; sourceTree = "<group>"; };
+		ED30B4F91FD1020E0046720B /* YinSiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YinSiViewController.m; sourceTree = "<group>"; };
+		ED30B5011FD106A10046720B /* ZHCTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHCTools.m; sourceTree = "<group>"; };
+		ED30B5021FD106A10046720B /* ZHCTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHCTools.h; sourceTree = "<group>"; };
+		ED30B5101FD135000046720B /* AllServicesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllServicesCollectionViewCell.h; sourceTree = "<group>"; };
+		ED30B5111FD135000046720B /* AllServicesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllServicesCollectionViewCell.m; sourceTree = "<group>"; };
+		ED30B5121FD135000046720B /* AllServicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllServicesViewController.h; sourceTree = "<group>"; };
+		ED30B5131FD135000046720B /* AllServicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllServicesViewController.m; sourceTree = "<group>"; };
+		ED30B5921FD14EA20046720B /* HeaderUrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderUrl.h; sourceTree = "<group>"; };
+		ED30B5931FD14EDE0046720B /* HeaderTitleSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeaderTitleSize.h; sourceTree = "<group>"; };
 		EDF3DE1B1FC2851C00BB36BE /* BaseTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseTableViewCell.m; sourceTree = "<group>"; };
 		EDF3DE1C1FC2851C00BB36BE /* BaseTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseTableViewCell.h; sourceTree = "<group>"; };
 		EDF4B5621DDAF22800E5AED0 /* 国际通用版.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "国际通用版.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -249,8 +284,6 @@
 		EDFC6CCB1FBAD84B00377016 /* UITableViewCell+WHC_AutoHeightForCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+WHC_AutoHeightForCell.m"; sourceTree = "<group>"; };
 		EDFC6CCC1FBAD84B00377016 /* UIView+WHC_AutoLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+WHC_AutoLayout.h"; sourceTree = "<group>"; };
 		EDFC6CCD1FBAD84B00377016 /* UIView+WHC_AutoLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+WHC_AutoLayout.m"; sourceTree = "<group>"; };
-		EDFC6D251FBAD84B00377016 /* CZNetworkManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CZNetworkManager.h; sourceTree = "<group>"; };
-		EDFC6D261FBAD84B00377016 /* CZNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CZNetworkManager.m; sourceTree = "<group>"; };
 		EDFC6D291FBAD84B00377016 /* LaunchScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LaunchScreenViewController.h; sourceTree = "<group>"; };
 		EDFC6D2A1FBAD84B00377016 /* LaunchScreenViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LaunchScreenViewController.m; sourceTree = "<group>"; };
 		EDFC6D3E1FBAD84B00377016 /* MineSerivesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MineSerivesViewController.h; sourceTree = "<group>"; };
@@ -373,6 +406,157 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		ED30B4D71FD0FD840046720B /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4D81FD0FD840046720B /* NetWorkManager */,
+			);
+			name = Tools;
+			path = "../../../../温控仪/温控仪/Class/Tools";
+			sourceTree = "<group>";
+		};
+		ED30B4D81FD0FD840046720B /* NetWorkManager */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4D91FD0FD840046720B /* CZNetworkManager.h */,
+				ED30B4DA1FD0FD840046720B /* CZNetworkManager.m */,
+				ED30B4DB1FD0FD840046720B /* CZPlistTools.h */,
+				ED30B4DC1FD0FD840046720B /* CZPlistTools.m */,
+				ED30B5021FD106A10046720B /* ZHCTools.h */,
+				ED30B5011FD106A10046720B /* ZHCTools.m */,
+				ED30B4DD1FD0FD840046720B /* Header.h */,
+				ED30B5921FD14EA20046720B /* HeaderUrl.h */,
+				ED30B5931FD14EDE0046720B /* HeaderTitleSize.h */,
+			);
+			path = NetWorkManager;
+			sourceTree = "<group>";
+		};
+		ED30B4E01FD1020E0046720B /* ReplaceVC */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4E11FD1020E0046720B /* ForgetPwdViewController */,
+				ED30B4E91FD1020E0046720B /* registerViewController */,
+			);
+			path = ReplaceVC;
+			sourceTree = "<group>";
+		};
+		ED30B4E11FD1020E0046720B /* ForgetPwdViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4E51FD1020E0046720B /* ForgetPwdViewController.h */,
+				ED30B4E61FD1020E0046720B /* ForgetPwdViewController.m */,
+				ED30B4E21FD1020E0046720B /* ChongZhiPwdViewController */,
+			);
+			path = ForgetPwdViewController;
+			sourceTree = "<group>";
+		};
+		ED30B4E21FD1020E0046720B /* ChongZhiPwdViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4E31FD1020E0046720B /* ChongZhiPwdViewController.h */,
+				ED30B4E41FD1020E0046720B /* ChongZhiPwdViewController.m */,
+			);
+			path = ChongZhiPwdViewController;
+			sourceTree = "<group>";
+		};
+		ED30B4E91FD1020E0046720B /* registerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4ED1FD1020E0046720B /* RegisterViewController.h */,
+				ED30B4EE1FD1020E0046720B /* RegisterViewController.m */,
+				ED30B4EA1FD1020E0046720B /* MessageViewController */,
+				ED30B4EF1FD1020E0046720B /* View */,
+				ED30B4F11FD1020E0046720B /* XieYiNeiRongViewController */,
+				ED30B4F71FD1020E0046720B /* YinSiViewController */,
+			);
+			path = registerViewController;
+			sourceTree = "<group>";
+		};
+		ED30B4EA1FD1020E0046720B /* MessageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4EB1FD1020E0046720B /* SubmitViewController */,
+			);
+			path = MessageViewController;
+			sourceTree = "<group>";
+		};
+		ED30B4EB1FD1020E0046720B /* SubmitViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4EC1FD1020E0046720B /* SuccessReviseViewController */,
+			);
+			path = SubmitViewController;
+			sourceTree = "<group>";
+		};
+		ED30B4EC1FD1020E0046720B /* SuccessReviseViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SuccessReviseViewController;
+			sourceTree = "<group>";
+		};
+		ED30B4EF1FD1020E0046720B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4F01FD1020E0046720B /* PZXVerificationCodeTextField */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ED30B4F01FD1020E0046720B /* PZXVerificationCodeTextField */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PZXVerificationCodeTextField;
+			sourceTree = "<group>";
+		};
+		ED30B4F11FD1020E0046720B /* XieYiNeiRongViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4F21FD1020E0046720B /* TableViewCell */,
+				ED30B4F51FD1020E0046720B /* XieYiNeiRongViewController.h */,
+				ED30B4F61FD1020E0046720B /* XieYiNeiRongViewController.m */,
+			);
+			path = XieYiNeiRongViewController;
+			sourceTree = "<group>";
+		};
+		ED30B4F21FD1020E0046720B /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4F31FD1020E0046720B /* TableViewCell.h */,
+				ED30B4F41FD1020E0046720B /* TableViewCell.m */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		ED30B4F71FD1020E0046720B /* YinSiViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B4F81FD1020E0046720B /* YinSiViewController.h */,
+				ED30B4F91FD1020E0046720B /* YinSiViewController.m */,
+			);
+			path = YinSiViewController;
+			sourceTree = "<group>";
+		};
+		ED30B50E1FD135000046720B /* AllServicesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B5121FD135000046720B /* AllServicesViewController.h */,
+				ED30B5131FD135000046720B /* AllServicesViewController.m */,
+				ED30B50F1FD135000046720B /* AllServicesCollectionViewCell */,
+			);
+			path = AllServicesViewController;
+			sourceTree = "<group>";
+		};
+		ED30B50F1FD135000046720B /* AllServicesCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				ED30B5101FD135000046720B /* AllServicesCollectionViewCell.h */,
+				ED30B5111FD135000046720B /* AllServicesCollectionViewCell.m */,
+			);
+			path = AllServicesCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		EDF4B5591DDAF22800E5AED0 = {
 			isa = PBXGroup;
 			children = (
@@ -437,10 +621,10 @@
 		EDFC6C2F1FBAD84B00377016 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				ED30B4D71FD0FD840046720B /* Tools */,
 				EDFC6C301FBAD84B00377016 /* AppDelegate */,
 				EDFC6C401FBAD84B00377016 /* Catgory */,
 				EDFC6C661FBAD84B00377016 /* Lib */,
-				EDFC6D231FBAD84B00377016 /* Tools */,
 				EDFC6D271FBAD84B00377016 /* ViewControllers */,
 				EDFC6E881FBAD84B00377016 /* VIews */,
 			);
@@ -627,28 +811,12 @@
 			path = WHC_AutoLayoutKit;
 			sourceTree = "<group>";
 		};
-		EDFC6D231FBAD84B00377016 /* Tools */ = {
-			isa = PBXGroup;
-			children = (
-				EDFC6D241FBAD84B00377016 /* NetWorkManager */,
-			);
-			path = Tools;
-			sourceTree = "<group>";
-		};
-		EDFC6D241FBAD84B00377016 /* NetWorkManager */ = {
-			isa = PBXGroup;
-			children = (
-				EDFC6D251FBAD84B00377016 /* CZNetworkManager.h */,
-				EDFC6D261FBAD84B00377016 /* CZNetworkManager.m */,
-			);
-			path = NetWorkManager;
-			sourceTree = "<group>";
-		};
 		EDFC6D271FBAD84B00377016 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				EDFC6D281FBAD84B00377016 /* LaunchViewController */,
 				EDFC6D2B1FBAD84B00377016 /* LoginViewController */,
+				ED30B4E01FD1020E0046720B /* ReplaceVC */,
 				EDFC6E721FBAD84B00377016 /* Model */,
 			);
 			path = ViewControllers;
@@ -690,6 +858,7 @@
 			isa = PBXGroup;
 			children = (
 				EDFC6D3D1FBAD84B00377016 /* MineSerivesViewController */,
+				ED30B50E1FD135000046720B /* AllServicesViewController */,
 				EDFC6D4A1FBAD84B00377016 /* SetServicesViewController */,
 			);
 			path = Controllers;
@@ -1163,9 +1332,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
-				"zh-Hans",
 			);
 			mainGroup = EDF4B5591DDAF22800E5AED0;
 			productRefGroup = EDF4B5631DDAF22800E5AED0 /* Products */;
@@ -1276,8 +1443,10 @@
 				EDFC6F0B1FBAEE1E00377016 /* HTMLBaseViewController.m in Sources */,
 				EDFC6F311FBAEE1E00377016 /* PhotoCollectionViewCell.m in Sources */,
 				EDFC6F321FBAEE1E00377016 /* PlaceholderTextView.m in Sources */,
+				ED30B4FF1FD1020E0046720B /* XieYiNeiRongViewController.m in Sources */,
 				EDFC6F331FBAEE1E00377016 /* UserFeedBackViewController.m in Sources */,
 				EDFC6F341FBAEE1E00377016 /* LocationPickerVC.m in Sources */,
+				ED30B4FE1FD1020E0046720B /* TableViewCell.m in Sources */,
 				EDFC6F351FBAEE1E00377016 /* LocationCell.m in Sources */,
 				EDFC6F361FBAEE1E00377016 /* NiChengViewController.m in Sources */,
 				EDFC6F371FBAEE1E00377016 /* GeRenModel.m in Sources */,
@@ -1289,19 +1458,22 @@
 				EDFC6F3D1FBAEE1E00377016 /* MineTableViewCell.m in Sources */,
 				EDFC6F3E1FBAEE1E00377016 /* OvalCircleView.m in Sources */,
 				EDFC6ED51FBAED4300377016 /* LaunchScreenViewController.m in Sources */,
-				EDFC6ED41FBAED2E00377016 /* CZNetworkManager.m in Sources */,
 				EDFC6ECA1FBAEBA700377016 /* AuthcodeView.m in Sources */,
+				ED30B4FD1FD1020E0046720B /* RegisterViewController.m in Sources */,
 				EDFC6EC51FBAEB7500377016 /* AlertMessageView.m in Sources */,
 				EDFC6EC41FBAEAD100377016 /* PZXVerificationCodeView.m in Sources */,
 				EDFC6EC31FBAEAA700377016 /* PZXVerificationTextField.m in Sources */,
+				ED30B5151FD135000046720B /* AllServicesViewController.m in Sources */,
 				EDFC6EC21FBAEA9A00377016 /* DiZhiModel.m in Sources */,
 				EDFC6EC11FBAEA8C00377016 /* LiShiModel.m in Sources */,
 				EDFC6EC01FBAEA7F00377016 /* MessageModel.m in Sources */,
 				EDFC6EBF1FBAEA7500377016 /* ServicesDataModel.m in Sources */,
 				EDFC6EBE1FBAEA6E00377016 /* ServicesModel.m in Sources */,
 				EDFC6EBD1FBAEA6700377016 /* StateModel.m in Sources */,
+				ED30B5141FD135000046720B /* AllServicesCollectionViewCell.m in Sources */,
 				EDFC6EBC1FBAEA5E00377016 /* UserModel.m in Sources */,
 				EDFC6EBB1FBAEA5600377016 /* UIView+WHC_AutoLayout.m in Sources */,
+				ED30B5001FD1020E0046720B /* YinSiViewController.m in Sources */,
 				EDFC6EB91FBAEA4400377016 /* UITableViewCell+WHC_AutoHeightForCell.m in Sources */,
 				EDFC6EB81FBAEA3600377016 /* UULineChart.m in Sources */,
 				EDFC6EB71FBAEA2D00377016 /* UUChartLabel.m in Sources */,
@@ -1318,6 +1490,7 @@
 				EDFC6EAC1FBAE97500377016 /* ESPTouchGenerator.m in Sources */,
 				EDFC6EAB1FBAE96C00377016 /* ESPGuideCode.m in Sources */,
 				EDFC6EAA1FBAE96500377016 /* ESPDatumCode.m in Sources */,
+				ED30B5031FD106A20046720B /* ZHCTools.m in Sources */,
 				EDFC6EA91FBAE95D00377016 /* ESPDataCode.m in Sources */,
 				EDFC6EA81FBAE95300377016 /* ESP_WifiUtil.m in Sources */,
 				EDFC6EA71FBAE2DC00377016 /* ESP_NetUtil.m in Sources */,
@@ -1331,10 +1504,12 @@
 				EDFC6E9E1FBAD9AD00377016 /* UIView+Extension.m in Sources */,
 				EDFC6E9D1FBAD9A600377016 /* UITextField+Custom.m in Sources */,
 				EDFC6E9C1FBAD9A100377016 /* UILabel+Custom.m in Sources */,
+				ED30B4FA1FD1020E0046720B /* ChongZhiPwdViewController.m in Sources */,
 				EDFC6E9B1FBAD99900377016 /* UIImageView+Extension.m in Sources */,
 				EDFC6E9A1FBAD99400377016 /* UIImage+Extension.m in Sources */,
 				EDFC6E991FBAD98D00377016 /* UIColor+Extensions.m in Sources */,
 				EDFC6E981FBAD98800377016 /* UIButton+Custom.m in Sources */,
+				ED30B4DE1FD0FD840046720B /* CZNetworkManager.m in Sources */,
 				EDFC6E971FBAD98200377016 /* UIBarButtonItem+Extension.m in Sources */,
 				EDFC6E961FBAD97D00377016 /* UIAlertController+Custom.m in Sources */,
 				EDFC6E951FBAD97600377016 /* Singleton.m in Sources */,
@@ -1343,7 +1518,9 @@
 				EDFC6E921FBAD96A00377016 /* HistoryTableViewCell.m in Sources */,
 				EDFC6E911FBAD96600377016 /* HelpFunction.m in Sources */,
 				EDFC6E901FBAD96200377016 /* Foundation+Log.m in Sources */,
+				ED30B4FB1FD1020E0046720B /* ForgetPwdViewController.m in Sources */,
 				EDFC6E8F1FBAD95E00377016 /* CustomPickerView.m in Sources */,
+				ED30B4DF1FD0FD840046720B /* CZPlistTools.m in Sources */,
 				EDFC6E8E1FBAD95A00377016 /* BDImagePicker.m in Sources */,
 				EDFC6E8D1FBAD95600377016 /* XMGNavigationController.m in Sources */,
 				EDFC6E8C1FBAD95200377016 /* TabBarViewController.m in Sources */,
@@ -1400,6 +1577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1447,6 +1625,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1490,11 +1669,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WA9VRUVC47;
-				GCC_PREFIX_HEADER = "/Users/hangzhouaerfate/Desktop/DaFeiMiao/国际通用版/国际通用版/Class/AppDelegate/EspTouchDemo-Prefix.pch";
+				GCC_PREFIX_HEADER = "/Users/hangzhouaerfate/Desktop/DaFeMiao/国际通用版/国际通用版/Class/AppDelegate/EspTouchDemo-Prefix.pch";
 				INFOPLIST_FILE = "国际通用版/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.haiChang.InternationalEdition;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haiChang.daFeiMiao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1506,11 +1685,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WA9VRUVC47;
-				GCC_PREFIX_HEADER = "/Users/hangzhouaerfate/Desktop/DaFeiMiao/国际通用版/国际通用版/Class/AppDelegate/EspTouchDemo-Prefix.pch";
+				GCC_PREFIX_HEADER = "/Users/hangzhouaerfate/Desktop/DaFeMiao/国际通用版/国际通用版/Class/AppDelegate/EspTouchDemo-Prefix.pch";
 				INFOPLIST_FILE = "国际通用版/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.haiChang.InternationalEdition;
+				PRODUCT_BUNDLE_IDENTIFIER = com.haiChang.daFeiMiao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -7,9 +7,7 @@
 #define HEIGHT_KEYBOARD 216
 
 
-@interface WiFiViewController ()<UITextFieldDelegate> {
-    CFDictionaryRef dictRef;
-}
+@interface WiFiViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic)  UITextField *_pwdTextView;
 @property (strong, nonatomic)  UIButton *_confirmCancelBtn;
 @property (strong, nonatomic)  UILabel *ssidLabel;
@@ -28,45 +26,13 @@
     searVC.ssidText = [NSString stringWithFormat:@"%@" , self.ssidLabel.text];
     searVC.bssid = [NSString stringWithFormat:@"%@" , self._pwdTextView.text];
     searVC.navigationItem.title = @"添加设备";
-    searVC.addServiceModel = self.addServiceModel;
+    searVC.serviceModel = self.serviceModel;
     [self.navigationController pushViewController:searVC animated:YES];
     
 }
 
-- (void)setAddServiceModel:(AddServiceModel *)addServiceModel {
-    _addServiceModel = addServiceModel;
-}
-
-#pragma mark - 获取本地wifi名字
-- (NSString *)getWifiName
-{
-    NSString *wifiName = nil;
-    
-    CFArrayRef wifiInterfaces = CNCopySupportedInterfaces();
-    
-    if (!wifiInterfaces) {
-        return nil;
-    }
-    
-    NSArray *interfaces = (__bridge NSArray *)wifiInterfaces;
-    
-    for (NSString *interfaceName in interfaces) {
-        dictRef = CNCopyCurrentNetworkInfo((__bridge CFStringRef)(interfaceName));
-        
-        if (dictRef) {
-            NSDictionary *networkInfo = (__bridge NSDictionary *)dictRef;
-            NSLog(@"%@" , networkInfo);
-            
-            self.ssidLabel.text = networkInfo[@"SSID"];
-            self.bssid = networkInfo[@"BSSID"];
-            wifiName = [networkInfo objectForKey:(__bridge NSString *)kCNNetworkInfoKeySSID];
-            
-            CFRelease(dictRef);
-        }
-    }
-    
-    CFRelease(wifiInterfaces);
-    return wifiName;
+- (void)setServiceModel:(ServicesModel *)serviceModel {
+    _serviceModel = serviceModel;
 }
 
 - (void)viewDidLoad {
@@ -76,15 +42,13 @@
     
     [self setUI];
 
-    [self getWifiName];
     [UIAlertController creatRightAlertControllerWithHandle:nil andSuperViewController:self Title:@"请输入正确的WIFI密码，密码错误，设备无法绑定!"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    if (dictRef) {
-    } else {
+    if ([kNetWork getWifiName] == nil) {
         [UIAlertController creatRightAlertControllerWithHandle:^{
             [self.navigationController popViewControllerAnimated:YES];
         } andSuperViewController:kWindowRoot Title:@"您当前没有连接WIFI，设备无法添加"];
@@ -128,10 +92,10 @@
     }];
     self.ssidLabel.textColor = [UIColor grayColor];
     
-    if ([self getWifiName] == nil || [[self getWifiName] isKindOfClass:[NSNull class]]) {
+    if ([kNetWork getWifiName] == nil || [[kNetWork getWifiName] isKindOfClass:[NSNull class]]) {
         self.ssidLabel.text = @"未链接WIFI";
     } else {
-        self.ssidLabel.text = [NSString stringWithFormat:@"%@" , [self getWifiName]];
+        self.ssidLabel.text = [NSString stringWithFormat:@"%@" , [kNetWork getWifiName]];
     }
 
     UIView *xiaHuaXian2 = [[UIView alloc]init];

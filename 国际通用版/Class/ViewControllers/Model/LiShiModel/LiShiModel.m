@@ -12,4 +12,10 @@
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {
     
 }
+
+- (NSString *)description
+{
+    return [self yy_modelDescription];
+}
+
 @end

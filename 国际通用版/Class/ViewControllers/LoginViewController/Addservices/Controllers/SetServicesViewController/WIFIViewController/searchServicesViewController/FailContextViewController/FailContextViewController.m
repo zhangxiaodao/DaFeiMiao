@@ -75,7 +75,7 @@
     }];
     lable1.textColor = [UIColor whiteColor];
     
-    UILabel *lable2 = [UILabel creatLableWithTitle:[NSString stringWithFormat:@"%@%@" , self.addServiceModel.brand , self.addServiceModel.typeName] andSuperView:view andFont:k15 andTextAligment:NSTextAlignmentLeft];
+    UILabel *lable2 = [UILabel creatLableWithTitle:[NSString stringWithFormat:@"%@%@" , self.serviceModel.brand , self.serviceModel.typeName] andSuperView:view andFont:k15 andTextAligment:NSTextAlignmentLeft];
     lable2.layer.borderWidth = 0;
     [lable2 mas_makeConstraints:^(MASConstraintMaker *make) {
 
@@ -193,13 +193,12 @@
     
 }
 
-- (void)setAddServiceModel:(AddServiceModel *)addServiceModel {
-    _addServiceModel = addServiceModel;
-    
-    
-    if (_addServiceModel.brand == nil) {
-        _addServiceModel.brand = @"";
+- (void)setServiceModel:(ServicesModel *)serviceModel {
+    _serviceModel = serviceModel;
+    if (_serviceModel.brand == nil) {
+        _serviceModel.brand = @"";
     }
 }
+
 
 @end

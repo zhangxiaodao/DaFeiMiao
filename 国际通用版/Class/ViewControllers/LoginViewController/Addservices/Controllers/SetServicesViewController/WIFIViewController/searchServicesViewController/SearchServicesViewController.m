@@ -46,8 +46,8 @@
 
 @implementation SearchServicesViewController
 
-- (void)setAddServiceModel:(AddServiceModel *)addServiceModel {
-    _addServiceModel = addServiceModel;
+- (void)setServiceModel:(ServicesModel *)serviceModel {
+    _serviceModel = serviceModel;
 }
 
 - (void)viewDidLoad {
@@ -210,8 +210,6 @@
     } else {
         devsn = [str substringWithRange:NSMakeRange(10, 12)];
     }
-
-    NSLog(@" devsn --%@ ,  devtypeSn--%@ , self.deviceSn--%@ , self.addServiceModel.typeSn--%@ , str--%@" ,  devsn, devtypeSn , self.deviceSn ,self.addServiceModel.typeSn ,  str);
     
     if ([devsn isEqualToString:self.deviceSn]) {
         self.devTypeSn = devtypeSn;
@@ -223,13 +221,13 @@
         
         if ([self.devTypeSn isEqualToString:@"412a"]) {
 //            self.devTypeSn = @"4131";
-            self.devTypeSn = self.addServiceModel.typeSn;
+            self.devTypeSn = self.serviceModel.typeSn;
         }
         
-        if ([self.devTypeSn isEqualToString:self.addServiceModel.typeSn]) {
+        if ([self.devTypeSn isEqualToString:self.serviceModel.typeSn]) {
             
             NSDictionary *parames = [NSMutableDictionary dictionary];
-            [parames setValuesForKeysWithDictionary:@{@"ud.userSn" : [kStanderDefault objectForKey:@"userSn"] ,  @"ud.devSn" : self.deviceSn , @"ud.devTypeSn" : self.devTypeSn, @"phoneType":@(2) , @"ud.devTypeNumber":self.addServiceModel.typeNumber}];
+            [parames setValuesForKeysWithDictionary:@{@"ud.userSn" : [kStanderDefault objectForKey:@"userSn"] ,  @"ud.devSn" : self.deviceSn , @"ud.devTypeSn" : self.devTypeSn, @"phoneType":@(2) , @"ud.devTypeNumber":self.serviceModel.typeNumber}];
             
             
             if ([kStanderDefault objectForKey:@"cityName"] && [kStanderDefault objectForKey:@"provience"]) {
@@ -244,7 +242,7 @@
             }
             
             NSLog(@"%@" , parames);
-            [kNetWork requestPOSTUrlString:self.addServiceModel.bindUrl parameters:parames isSuccess:^(NSDictionary * _Nullable responseObject) {
+            [kNetWork requestPOSTUrlString:self.serviceModel.bindUrl parameters:parames isSuccess:^(NSDictionary * _Nullable responseObject) {
                 
                 _processView.percent = 1.00;
                 [_progressTimer invalidate];
@@ -264,7 +262,9 @@
                     }
                 });
                 
-            } failure:nil];
+            } failure:^(NSError * _Nonnull error) {
+                [kNetWork noNetWork];
+            }];
             
             
         } else {
@@ -281,7 +281,7 @@
 //            self.updSocket = nil;
             [self openUDPServer];
             
-            [self sendMessage:self.addServiceModel.protocol];
+            [self sendMessage:self.serviceModel.protocol];
             
         }
         
@@ -295,7 +295,7 @@
     
     FailContextViewController *failVC = [[FailContextViewController alloc]init];
     failVC.navigationItem.title = @"失败";
-    failVC.addServiceModel = self.addServiceModel;
+    failVC.serviceModel = self.serviceModel;
     [self.navigationController pushViewController:failVC animated:YES];
 }
 
@@ -325,6 +325,7 @@
     [kStanderDefault setObject:@"YES" forKey:@"isHaveServices"];
     [kStanderDefault setObject:@"YES" forKey:@"Login"];
     
+    [[NSNotificationCenter defaultCenter]postNotification:[NSNotification notificationWithName:BindService object:nil]];
     
     MineSerivesViewController *tabVC = [[MineSerivesViewController alloc]init];
     tabVC.fromAddVC = @"YES";
@@ -341,7 +342,7 @@
 
 #pragma mark - 重复发送
 - (void)repeatSendMessage {
-    [self sendMessage:self.addServiceModel.protocol];
+    [self sendMessage:self.serviceModel.protocol];
 }
 
 - (NSString *)convertDataToHexStr:(NSData *)data {
@@ -386,7 +387,7 @@
                 [_progressTimer setFireDate:[NSDate distantPast]];
                 [self openUDPServer];
                 self.registerLable.textColor = kMainColor;
-                [self sendMessage:self.addServiceModel.protocol];
+                [self sendMessage:self.serviceModel.protocol];
                 
                 self.repeatSendTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(repeatSendMessage) userInfo:nil repeats:YES];
             }

@@ -10,38 +10,38 @@
 
 @implementation ServicesDataModel
 
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
-    if ([key isEqualToString:@"filterDust"]) {
-        self.filterDust = [key floatValue];
-    }
-    if ([key isEqualToString:@"iceCrystalTime"]) {
-        self.iceCrystalTime = [key floatValue];
-    }
-    
-    if ([key isEqualToString:@"filterScreenNeat"]) {
-        self.filterScreenNeat = [key floatValue];
-    }
-    
-    if ([key isEqualToString:@"totalC"]) {
-        self.totalC = [key floatValue];
-    }
-    
-    if ([key isEqualToString:@"totalTime"]) {
-        self.totalTime = [key floatValue];
-    }
-    
-    if ([key isEqualToString:@"waterStateTime"]) {
-        self.waterStateTime = [key floatValue];
-    }
-    
-    if ([key isEqualToString:@"filterTime"]) {
-        self.filterTime = [key floatValue];
-    }
-    
-}
+//- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+//    if ([key isEqualToString:@"filterDust"]) {
+//        self.filterDust = [key floatValue];
+//    }
+//    if ([key isEqualToString:@"iceCrystalTime"]) {
+//        self.iceCrystalTime = [key floatValue];
+//    }
+//
+//    if ([key isEqualToString:@"filterScreenNeat"]) {
+//        self.filterScreenNeat = [key floatValue];
+//    }
+//
+//    if ([key isEqualToString:@"totalC"]) {
+//        self.totalC = [key floatValue];
+//    }
+//
+//    if ([key isEqualToString:@"totalTime"]) {
+//        self.totalTime = [key floatValue];
+//    }
+//
+//    if ([key isEqualToString:@"waterStateTime"]) {
+//        self.waterStateTime = [key floatValue];
+//    }
+//
+//    if ([key isEqualToString:@"filterTime"]) {
+//        self.filterTime = [key floatValue];
+//    }
+//
+//}
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"_totalTime--%f" , _totalTime];
+    return [self yy_modelDescription];
 }
 
 @end

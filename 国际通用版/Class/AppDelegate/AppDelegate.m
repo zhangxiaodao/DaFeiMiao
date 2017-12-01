@@ -62,7 +62,10 @@
                 }
             }
         }
-    } failure:nil];
+    } failure:^(NSError * _Nonnull error) {
+        [kNetWork noNetWork];
+    }];
+    
 }
 - (UILabel *)addNoNetLabel {
     UILabel *noNetWork = [UILabel creatLableWithTitle:@"❗️当前网络不可用，请检查手机网络" andSuperView:kWindowRoot.view andFont:k13 andTextAligment:NSTextAlignmentCenter];
@@ -88,23 +91,30 @@
 }
 
 - (void)setRootViewController {
-    NSString *isLaunchLoad = [kStanderDefault objectForKey:@"isLaunch"];
-    if ([isLaunchLoad isEqualToString:@"NO"]) {
-        [kStanderDefault setObject:@"NO" forKey:@"firstRun"];
-        
-        if ([kStanderDefault objectForKey:@"Login"]) {
-            
-            self.window.rootViewController = [[TabBarViewController alloc]init];
-        } else {
-            
-            LoginAnfRegisterVC *loginAngRegisterVC = [[LoginAnfRegisterVC alloc]init];
-            XMGNavigationController *nav = [[XMGNavigationController alloc]initWithRootViewController:loginAngRegisterVC];
-            
-            self.window.rootViewController = nav;
-        }
+    
+    if ([kStanderDefault objectForKey:@"Login"]) {
+        self.window.rootViewController = [[TabBarViewController alloc]init];
     } else {
-        self.window.rootViewController = [[LaunchScreenViewController alloc]init];
+        LoginAnfRegisterVC *loginAngRegisterVC = [[LoginAnfRegisterVC alloc]init];
+        XMGNavigationController *nav = [[XMGNavigationController alloc]initWithRootViewController:loginAngRegisterVC];
+        
+        self.window.rootViewController = nav;
     }
+    
+    
+//    NSString *isLaunchLoad = [kStanderDefault objectForKey:@"isLaunch"];
+//    if ([isLaunchLoad isEqualToString:@"NO"]) {
+//        [kStanderDefault setObject:@"NO" forKey:@"firstRun"];
+//        if ([kStanderDefault objectForKey:@"Login"]) {
+//            self.window.rootViewController = [[TabBarViewController alloc]init];
+//        } else {
+//            LoginAnfRegisterVC *loginAngRegisterVC = [[LoginAnfRegisterVC alloc]init];
+//            XMGNavigationController *nav = [[XMGNavigationController alloc]initWithRootViewController:loginAngRegisterVC];
+//            self.window.rootViewController = nav;
+//        }
+//    } else {
+//        self.window.rootViewController = [[LaunchScreenViewController alloc]init];
+//    }
     self.noNetwork = [self addNoNetLabel];
 }
 

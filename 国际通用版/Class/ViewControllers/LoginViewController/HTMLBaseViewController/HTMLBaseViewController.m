@@ -10,6 +10,13 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 @interface HTMLBaseViewController ()<HelpFunctionDelegate , UIWebViewDelegate>
 
+@property (nonatomic , strong) UserModel *userModel;
+@property (nonatomic , strong) NSMutableDictionary *dic;
+@property (nonatomic , strong) UIWebView *webView;
+@property (nonatomic , strong) UIActivityIndicatorView *searchView;
+
+@property (nonatomic , strong) JSContext *context;
+@property (nonatomic , assign) BOOL delegateService;
 @end
 
 @implementation HTMLBaseViewController
@@ -18,31 +25,62 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.delegateService = NO;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMachineDeviceAtcion:) name:kServiceOrder object:nil];
+    
+    [self setData];
+    [self webView];
+    [self searchView];
     
     [kStanderDefault setObject:@"YES" forKey:@"Login"];
     
-    NSDictionary *parames = @{@"userSn":[kStanderDefault objectForKey:@"userSn"]};
-    
-    [HelpFunction requestDataWithUrlString:kUserInfoURL andParames:parames andDelegate:self];
-    
-    _webView = [[UIWebView alloc]initWithFrame:kScreenFrame];
-    [self.view addSubview:_webView];
-    _webView.scrollView.scrollEnabled = NO;
-    _webView.backgroundColor = [UIColor clearColor];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    self.webView.delegate = self;
-    
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.serviceModel.indexUrl]]];
-    
-    _searchView = [[UIActivityIndicatorView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    [self.view addSubview:_searchView];
-    _searchView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [_searchView startAnimating];
-    
     [self passValueWithBlock];
+}
+
+- (void)setData {
+    NSDictionary *userData = [kPlistTools readDataFromFile:UserData];
+    [self setUserData:userData];
+}
+
+- (void)setUserData:(NSDictionary *)dic {
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMachineDeviceAtcion:) name:kServiceOrder object:nil];
+    if ([dic[@"state"] integerValue] == 0) {
+        
+        NSDictionary *user = dic[@"data"];
+        [kStanderDefault setObject:user[@"sn"] forKey:@"userSn"];
+        [kStanderDefault setObject:user[@"id"] forKey:@"userId"];
+        
+        _userModel = [[UserModel alloc]init];
+        [_userModel yy_modelSetWithDictionary:user];
+        
+    }
+}
+
+
+#pragma mark - 懒加载
+- (UIWebView *)webView {
+    if (!_webView) {
+        _webView = [[UIWebView alloc]initWithFrame:kScreenFrame];
+        [self.view addSubview:_webView];
+        _webView.scrollView.scrollEnabled = NO;
+        _webView.backgroundColor = [UIColor clearColor];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        _webView.delegate = self;
+        
+        [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.serviceModel.indexUrl]]];
+    }
+    return _webView;
+}
+
+- (UIActivityIndicatorView *)searchView {
+    if (!_searchView) {
+        _searchView = [[UIActivityIndicatorView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        [self.view addSubview:_searchView];
+        _searchView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+        [_searchView startAnimating];
+    }
+    return _searchView;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -61,8 +99,11 @@
     [self.navigationController setNavigationBarHidden:NO animated:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (self.serviceModel) {
-        [_sendServiceModelToParentVCDelegate sendServiceModelToParentVC:self.serviceModel];
-        
+        [_delegate sendServiceModelToParentVC:self.serviceModel];
+    }
+    
+    if ([_delegate respondsToSelector:@selector(whetherDelegateService:)]) {
+        [_delegate whetherDelegateService:self.delegateService];
     }
     
 }
@@ -73,13 +114,10 @@
     __block typeof(self)bself = self;
     
     _context[@"PageLoadIOS"] = ^{
-        
         if (bself.searchView) {
-            
             dispatch_async(dispatch_get_main_queue(), ^{
                 bself.searchView.hidden = YES;
             });
-            
         }
         
         NSDictionary *userData = [NSMutableDictionary dictionaryWithObjectsAndKeys:@(bself.userModel.sn) , @"userSn" , bself.serviceModel.devTypeSn , @"devTypeSn" , bself.serviceModel.devSn , @"devSn" , @(bself.serviceModel.userDeviceID) , @"UserDeviceID" , [NSString stringWithFormat:@"http://%@:8080/" , localhost] , @"ServieceIP" , nil];
@@ -95,19 +133,7 @@
         
         NSString *orderStr = [NSString stringWithFormat:@"GetUserData(%@)" , jsonStr];
         [bself.context evaluateScript:orderStr];
-        
-        NSString *key = [NSString stringWithFormat:@"%@" , NSStringFromClass([bself.navigationController.childViewControllers[1] class])];
-        
-        if ([kStanderDefault objectForKey:key]) {
-
-            NSString *time = [kStanderDefault objectForKey:key];
-            NSString *sendTimeToHtml = [NSString stringWithFormat:@"GetWebData(%@)" , time];
-            NSLog(@"%@" , sendTimeToHtml);
-            [bself.context evaluateScript:sendTimeToHtml];
-        }
-        
     };
-    
     return YES;
 }
 
@@ -136,7 +162,11 @@
     JSContext *context = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     __block typeof(self)bself = self;
     context[@"BackIOS"] = ^() {
+        NSArray *ary = [JSContext currentArguments];
         
+        if (ary.count != 0) {
+            self.delegateService = YES;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [bself.navigationController popViewControllerAnimated:YES];
         });
@@ -150,7 +180,6 @@
         for (id obj in parames) {
             arrarString = [arrarString stringByAppendingFormat:@"%@" , obj];
         }
-        
         
         NSArray *array = [arrarString componentsSeparatedByString:@","];
         

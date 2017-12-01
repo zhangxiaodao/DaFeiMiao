@@ -19,9 +19,9 @@
 //        self.postcode = [NSString stringWithFormat:@"%@" , value];
 //    }
 }
-
-- (NSString *)description {
-    return [NSString stringWithFormat:@"addrCity:%@ \n addrCounty:%@  \n addrDetail:%@  \n addrProvince:%@  postcode:%@  \n receiverName:%@  \n receiverPhone:%@" , _addrCity , _addrCounty , _addrDetail , _addrProvince , _postcode , _receiverName , _receiverPhone];
+- (NSString *)description
+{
+    return [self yy_modelDescription];
 }
 
 @end

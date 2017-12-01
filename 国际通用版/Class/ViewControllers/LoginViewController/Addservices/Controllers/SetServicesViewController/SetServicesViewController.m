@@ -23,23 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self requestData];
     [self setUI];
-}
-
-- (void)requestData {
-    NSDictionary *parames = @{@"typeNumber":@"4236A"};
-    
-    [kNetWork requestPOSTUrlString:kServiceDataWithTypeNumber parameters:parames isSuccess:^(NSDictionary * _Nullable responseObject) {
-        
-        if ([responseObject[@"data"] isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *dic = responseObject[@"data"];
-            AddServiceModel *addModel = [[AddServiceModel alloc]init];
-            [addModel setValuesForKeysWithDictionary:dic];
-            [self setAddServiceModel:addModel];
-        }
-    } failure:nil];
-    
 }
 
 #pragma mark - 设置UI
@@ -60,7 +44,7 @@
     _imageView.animationRepeatCount = MAXFLOAT;
     [_imageView startAnimating];
     
-    UILabel *firstLable = [UILabel creatLableWithTitle:nil andSuperView:self.view andFont:k15 andTextAligment:NSTextAlignmentCenter];
+    UILabel *firstLable = [UILabel creatLableWithTitle:[NSString stringWithFormat:@"请开机长按%@，听到“滴”的声音后指示灯闪烁，进入配网模式。" , self.alertMessage] andSuperView:self.view andFont:k15 andTextAligment:NSTextAlignmentCenter];
     firstLable.textColor = [UIColor blackColor];
     firstLable.numberOfLines = 0;
     [firstLable mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -70,6 +54,7 @@
         .offset(kScreenW / 4.7);
     }];
     self.firstLable = firstLable;
+    
     
     UIButton *neaxtBtn = [UIButton initWithTitle:@"下一步" andColor:[UIColor redColor] andSuperView:self.view];
     neaxtBtn.layer.cornerRadius = kScreenW / 18;
@@ -85,8 +70,6 @@
     
 }
 
-
-
 - (void)viewWillDisappear:(BOOL)animated{
     [_imageView stopAnimating];
 }
@@ -94,23 +77,22 @@
 #pragma mark - 下一步按钮点击事件
 - (void)neaxtBtnAction {
     
-    if (self.addServiceModel.bindUrl == nil || [self.addServiceModel.bindUrl isKindOfClass:[NSNull class]]) {
+    if (self.serviceModel.bindUrl == nil || [self.serviceModel.bindUrl isKindOfClass:[NSNull class]]) {
         [UIAlertController creatRightAlertControllerWithHandle:^{
             [self.navigationController popViewControllerAnimated:YES];
         } andSuperViewController:self Title:@"暂无此设备"];
     } else {
         WiFiViewController *wifiVC = [[WiFiViewController alloc]init];
-        wifiVC.addServiceModel = self.addServiceModel;
+        wifiVC.serviceModel = self.serviceModel;
         wifiVC.navigationItem.title = @"添加设备";
         [self.navigationController pushViewController:wifiVC animated:YES];
     }
     
 }
 
-- (void)setAddServiceModel:(AddServiceModel *)addServiceModel {
-    _addServiceModel = addServiceModel;
-    
-    switch (_addServiceModel.slType) {
+- (void)setServiceModel:(ServicesModel *)serviceModel {
+    _serviceModel = serviceModel;
+    switch (_serviceModel.slTypeInt) {
         case 0:
             self.alertMessage = @"定时3秒";
             break;
@@ -126,7 +108,7 @@
         default:
             break;
     }
-    self.firstLable.text = [NSString stringWithFormat:@"请开机长按%@，听到“滴”的声音后指示灯闪烁，进入配网模式。" , self.alertMessage];
+    
 }
 
 @end
