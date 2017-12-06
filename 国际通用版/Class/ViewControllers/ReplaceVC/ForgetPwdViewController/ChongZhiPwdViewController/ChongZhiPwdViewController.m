@@ -86,76 +86,53 @@
         if ([self.pwdTectFiled.text isEqualToString:self.againPwdTectFiled.text]) {
             NSDictionary *parameters = @{@"userSn":self.userSn , @"newPassword" : self.againPwdTectFiled.text};
             NSLog(@"%@" , parameters);
-            [HelpFunction requestDataWithUrlString:kChongZhiMiMa andParames:parameters andDelegate:self];
+            
+            [kNetWork requestPOSTUrlString:kChongZhiMiMa parameters:parameters isSuccess:^(NSDictionary * _Nullable responseObject) {
+                
+                NSInteger state = [responseObject[@"state"] integerValue];
+                if (state == 0) {
+                    
+                    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{@"loginName":self.phoneNumber , @"password" : self.againPwdTectFiled.text , @"ua.phoneType" : @(2), @"ua.phoneBrand":@"iPhone" , @"ua.phoneModel":[NSString getDeviceName] , @"ua.phoneSystem":[NSString getDeviceSystemVersion]}];
+                    if ([kStanderDefault objectForKey:@"GeTuiClientId"]) {
+                        [parameters setObject:[kStanderDefault objectForKey:@"GeTuiClientId"] forKey:@"ua.clientId"];
+                    }
+                    [kStanderDefault setObject:self.againPwdTectFiled.text forKey:@"password"];
+                    [kStanderDefault setObject:self.phoneNumber forKey:@"phone"];
+                    [kNetWork requestPOSTUrlString:kLogin parameters:parameters isSuccess:^(NSDictionary * _Nullable responseObject) {
+                        [kPlistTools saveDataToFile:responseObject name:@"UserData"];
+                        NSDictionary *dic = responseObject;
+                        NSInteger state = [dic[@"state"] integerValue];
+                        if (state == 0) {
+                            NSDictionary *user = dic[@"data"];
+                            
+                            [kStanderDefault setObject:user[@"sn"] forKey:@"userSn"];
+                            [kStanderDefault setObject:user[@"id"] forKey:@"userId"];
+                            
+                            [kWindowRoot presentViewController:[[TabBarViewController alloc]init] animated:YES completion:^{
+                                [self.navigationController popToRootViewControllerAnimated:YES];
+                            }];
+                        }
+                    } failure:^(NSError * _Nonnull error) {
+                        [kNetWork noNetWork];
+                    }];
+                    
+                } else if (state == 1) {
+                    [UIAlertController creatRightAlertControllerWithHandle:nil andSuperViewController:self Title:@"密码输入为空"];
+                } else {
+                    
+                    [UIAlertController creatRightAlertControllerWithHandle:nil andSuperViewController:self Title:@"系统异常，请重试"];
+                }
+            } failure:^(NSError * _Nonnull error) {
+                [kNetWork noNetWork];
+            }];
             
         } else {
            
             [UIAlertController creatRightAlertControllerWithHandle:nil andSuperViewController:self Title:@"您两次输入的密码不相同，请重新输入"];
         }
     } else {
-        
         [UIAlertController creatRightAlertControllerWithHandle:nil andSuperViewController:self Title:@"密码长度必须大于6位并小于16位"];
-        
     }
-    
-}
-
-- (void)requestData:(HelpFunction *)request didSuccess:(NSDictionary *)dddd {
-    
-    NSLog(@"%@" , dddd);
-    
-    NSInteger state = [dddd[@"state"] integerValue];
-    if (state == 0) {
-        
-        NSDictionary *parameters = nil;
-        if ([kStanderDefault objectForKey:@"GeTuiClientId"]) {
-            parameters = @{@"loginName":self.phoneNumber , @"password" : self.againPwdTectFiled.text , @"ua.clientId" : [kStanderDefault objectForKey:@"GeTuiClientId"], @"ua.phoneType" : @(2), @"ua.phoneBrand":@"iPhone" , @"ua.phoneModel":[NSString getDeviceName] , @"ua.phoneSystem":[NSString getDeviceSystemVersion]};
-        } else {
-            parameters = @{@"loginName":self.phoneNumber , @"password" : self.againPwdTectFiled.text , @"ua.phoneType" : @(2), @"ua.phoneBrand":@"iPhone" , @"ua.phoneModel":[NSString getDeviceName] , @"ua.phoneSystem":[NSString getDeviceSystemVersion]};
-        }
-        
-   
-        [kStanderDefault setObject:self.againPwdTectFiled.text forKey:@"password"];
-        [kStanderDefault setObject:self.phoneNumber forKey:@"phone"];
-        [HelpFunction requestDataWithUrlString:kLogin andParames:parameters andDelegate:self];
-        
-    } else if (state == 1) {
-        [UIAlertController creatRightAlertControllerWithHandle:nil andSuperViewController:self Title:@"密码输入为空"];
-    } else {
-       
-        [UIAlertController creatRightAlertControllerWithHandle:nil andSuperViewController:self Title:@"系统异常，请重试"];
-    }
-}
-
-#pragma mark - 代理返回的数据
-- (void)requestData:(HelpFunction *)request didFinishLoadingDtaArray:(NSMutableArray *)data {
-    NSDictionary *dic = data[0];
-    //    NSLog(@"%@" , dic);
-    if ([dic[@"state"] integerValue] == 0) {
-        
-        NSDictionary *user = dic[@"data"];
-        
-        [kStanderDefault setObject:user[@"sn"] forKey:@"userSn"];
-        [kStanderDefault setObject:user[@"id"] forKey:@"userId"];
-        
-        UserModel *userModel = [[UserModel alloc]init];
-        for (NSString *key in [user allKeys]) {
-            [userModel setValue:user[key] forKey:key];
-        }
-        
-        kSocketTCP.userSn = [NSString stringWithFormat:@"%ld" , (long)userModel.sn];
-        //        [kSocketTCP cutOffSocket];
-        [kSocketTCP socketConnectHost];
-        
-        [kWindowRoot presentViewController:[[TabBarViewController alloc]init] animated:YES completion:^{
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }];
-    }
-}
-
-
-- (void)requestData:(HelpFunction *)request didFailLoadData:(NSError *)error {
-    NSLog(@"%@" , error);
 }
 
 #pragma mark - 点击空白处收回键盘

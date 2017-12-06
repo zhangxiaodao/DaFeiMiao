@@ -10,6 +10,10 @@
 
 @implementation ServicesModel
 
++ (NSDictionary *)modelCustomPropertyMapper {
+    return @{@"userDeviceID" : @"id"};
+}
+
 - (NSString *)description
 {
     return [self yy_modelDescription];

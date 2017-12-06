@@ -8,7 +8,7 @@
 
 #import "HTMLBaseViewController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
-@interface HTMLBaseViewController ()<HelpFunctionDelegate , UIWebViewDelegate>
+@interface HTMLBaseViewController ()<UIWebViewDelegate>
 
 @property (nonatomic , strong) UserModel *userModel;
 @property (nonatomic , strong) NSMutableDictionary *dic;
@@ -57,31 +57,6 @@
     }
 }
 
-
-#pragma mark - 懒加载
-- (UIWebView *)webView {
-    if (!_webView) {
-        _webView = [[UIWebView alloc]initWithFrame:kScreenFrame];
-        [self.view addSubview:_webView];
-        _webView.scrollView.scrollEnabled = NO;
-        _webView.backgroundColor = [UIColor clearColor];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-        _webView.delegate = self;
-        
-        [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.serviceModel.indexUrl]]];
-    }
-    return _webView;
-}
-
-- (UIActivityIndicatorView *)searchView {
-    if (!_searchView) {
-        _searchView = [[UIActivityIndicatorView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-        [self.view addSubview:_searchView];
-        _searchView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-        [_searchView startAnimating];
-    }
-    return _searchView;
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -227,28 +202,31 @@
 }
 
 
-- (void)requestData:(HelpFunction *)request didFinishLoadingDtaArray:(NSMutableArray *)data {
-    NSDictionary *dic = data[0];
-//    NSLog(@"%@" , dic);
-    if ([dic[@"state"] integerValue] == 0) {
+#pragma mark - 懒加载
+- (UIWebView *)webView {
+    if (!_webView) {
+        _webView = [[UIWebView alloc]initWithFrame:kScreenFrame];
+        [self.view addSubview:_webView];
+        _webView.scrollView.scrollEnabled = NO;
+        _webView.backgroundColor = [UIColor clearColor];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+        _webView.delegate = self;
         
-        NSDictionary *user = dic[@"data"];
-        
-        [kStanderDefault setObject:user[@"sn"] forKey:@"userSn"];
-        [kStanderDefault setObject:user[@"id"] forKey:@"userId"];
-        
-        _userModel = [[UserModel alloc]init];
-        for (NSString *key in [user allKeys]) {
-            [_userModel setValue:user[key] forKey:key];
-        }
-        
-        [self webView:_webView shouldStartLoadWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@""]] navigationType:UIWebViewNavigationTypeLinkClicked];
+        [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.serviceModel.indexUrl]]];
     }
+    return _webView;
 }
 
-- (void)requestData:(HelpFunction *)request didFailLoadData:(NSError *)error {
-    NSLog(@"%@" , error);
+- (UIActivityIndicatorView *)searchView {
+    if (!_searchView) {
+        _searchView = [[UIActivityIndicatorView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        [self.view addSubview:_searchView];
+        _searchView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+        [_searchView startAnimating];
+    }
+    return _searchView;
 }
+
 
 - (void)setServiceModel:(ServicesModel *)serviceModel {
     _serviceModel = serviceModel;

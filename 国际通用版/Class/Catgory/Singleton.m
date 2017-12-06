@@ -544,7 +544,8 @@
         }
         
 
-    } else if ([type isEqualToString:kLianJie]) {        NSInteger userSn = [string substringWithRange:NSMakeRange(2, 9)].integerValue;
+    } else if ([type isEqualToString:kLianJie]) {
+        NSInteger userSn = [string substringWithRange:NSMakeRange(2, 9)].integerValue;
         
         NSString *hexUserSn = [self ToHex:userSn];
         

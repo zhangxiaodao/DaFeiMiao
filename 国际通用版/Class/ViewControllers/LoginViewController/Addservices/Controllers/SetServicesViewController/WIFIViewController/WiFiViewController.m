@@ -7,7 +7,9 @@
 #define HEIGHT_KEYBOARD 216
 
 
-@interface WiFiViewController ()<UITextFieldDelegate>
+@interface WiFiViewController ()<UITextFieldDelegate>{
+    CFDictionaryRef dictRef;
+}
 @property (strong, nonatomic)  UITextField *_pwdTextView;
 @property (strong, nonatomic)  UIButton *_confirmCancelBtn;
 @property (strong, nonatomic)  UILabel *ssidLabel;
@@ -31,6 +33,38 @@
     
 }
 
+#pragma mark - 获取本地wifi名字
+- (NSString *)getWifiName
+{
+    NSString *wifiName = nil;
+    
+    CFArrayRef wifiInterfaces = CNCopySupportedInterfaces();
+    
+    if (!wifiInterfaces) {
+        return nil;
+    }
+    
+    NSArray *interfaces = (__bridge NSArray *)wifiInterfaces;
+    
+    for (NSString *interfaceName in interfaces) {
+        dictRef = CNCopyCurrentNetworkInfo((__bridge CFStringRef)(interfaceName));
+        
+        if (dictRef) {
+            NSDictionary *networkInfo = (__bridge NSDictionary *)dictRef;
+            NSLog(@"%@" , networkInfo);
+            
+            self.ssidLabel.text = networkInfo[@"SSID"];
+            self.bssid = networkInfo[@"BSSID"];
+            wifiName = [networkInfo objectForKey:(__bridge NSString *)kCNNetworkInfoKeySSID];
+            
+            CFRelease(dictRef);
+        }
+    }
+    
+    CFRelease(wifiInterfaces);
+    return wifiName;
+}
+
 - (void)setServiceModel:(ServicesModel *)serviceModel {
     _serviceModel = serviceModel;
 }
@@ -48,7 +82,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    if ([kNetWork getWifiName] == nil) {
+    if ([self getWifiName] == nil) {
         [UIAlertController creatRightAlertControllerWithHandle:^{
             [self.navigationController popViewControllerAnimated:YES];
         } andSuperViewController:kWindowRoot Title:@"您当前没有连接WIFI，设备无法添加"];
@@ -92,10 +126,10 @@
     }];
     self.ssidLabel.textColor = [UIColor grayColor];
     
-    if ([kNetWork getWifiName] == nil || [[kNetWork getWifiName] isKindOfClass:[NSNull class]]) {
+    if ([self getWifiName] == nil || [[self getWifiName] isKindOfClass:[NSNull class]]) {
         self.ssidLabel.text = @"未链接WIFI";
     } else {
-        self.ssidLabel.text = [NSString stringWithFormat:@"%@" , [kNetWork getWifiName]];
+        self.ssidLabel.text = [NSString stringWithFormat:@"%@" , [self getWifiName]];
     }
 
     UIView *xiaHuaXian2 = [[UIView alloc]init];

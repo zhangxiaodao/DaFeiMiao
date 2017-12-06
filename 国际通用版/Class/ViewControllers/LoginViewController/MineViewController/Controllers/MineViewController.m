@@ -31,19 +31,42 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"f2f4fb"];
-    NSDictionary *parames = @{@"userSn":[kStanderDefault objectForKey:@"userSn"]};
-    [HelpFunction requestDataWithUrlString:kUserInfoURL andParames:parames andDelegate:self];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getHeadImage:) name:@"headImage" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNiCheng:) name:@"niCheng" object:nil];
+    [self setData];
     
     [self setNav];
     
     [self setUI];
     
+    [self setNotiFia];
+    
 }
 
+- (void)setData {
+    NSDictionary *parames = @{@"userSn":[kStanderDefault objectForKey:@"userSn"]};
+    [kNetWork requestPOSTUrlString:kUserInfoURL parameters:parames isSuccess:^(NSDictionary * _Nullable responseObject) {
+        [kPlistTools saveDataToFile:responseObject name:@"UserData"];
+        if ([responseObject[@"state"] integerValue] == 0) {
+            NSDictionary *user = responseObject[@"data"];
+            [kStanderDefault setObject:user[@"sn"] forKey:@"userSn"];
+            [kStanderDefault setObject:user[@"id"] forKey:@"userId"];
+            
+            UserModel *userModel = [[UserModel alloc]init];
+            [userModel yy_modelSetWithJSON:user];
+            self.userModel = userModel;
+            _headPortraitView.userModel = self.userModel;
+            
+        }
+    } failure:^(NSError * _Nonnull error) {
+        [kNetWork noNetWork];
+    }];
+}
+
+- (void)setNotiFia {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getHeadImage:) name:@"headImage" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getNiCheng:) name:@"niCheng" object:nil];
+}
 
 - (MineTableViewCell *)tableViewindexPathForRow:(NSInteger)row inSection:(NSInteger)section {
     NSIndexPath *indexpath = [NSIndexPath indexPathForRow:row inSection:section];

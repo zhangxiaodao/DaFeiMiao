@@ -48,6 +48,7 @@
         [kStanderDefault setObject:self.accTectFiled.text forKey:@"phone"];
         
         [kNetWork requestPOSTUrlString:kRegisterURL parameters:parameters isSuccess:^(NSDictionary * _Nullable responseObject) {
+            [kPlistTools saveDataToFile:responseObject name:@"UserData"];
             NSInteger state = [responseObject[@"state"] integerValue];
             
             if (state == 0) {

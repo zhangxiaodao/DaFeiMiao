@@ -294,19 +294,16 @@
 - (void)accountPwfLogin {
     if ( (self.acctextFiled.text.length == 11 || self.acctextFiled.text.length == 9) && (self.pwdTectFiled.text.length >= 6 && self.pwdTectFiled.text.length <= 16)) {
         
-        [SVProgressHUD show];
-        NSDictionary *parameters = nil;
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary: @{@"loginName":self.acctextFiled.text , @"password" : self.pwdTectFiled.text ,  @"ua.phoneType" : @(2), @"ua.phoneBrand":@"iPhone" , @"ua.phoneModel":[NSString getDeviceName] , @"ua.phoneSystem":[NSString getDeviceSystemVersion]}];
         if ([kStanderDefault objectForKey:@"GeTuiClientId"]) {
-            parameters = @{@"loginName":self.acctextFiled.text , @"password" : self.pwdTectFiled.text , @"ua.clientId" : [kStanderDefault objectForKey:@"GeTuiClientId"], @"ua.phoneType" : @(2), @"ua.phoneBrand":@"iPhone" , @"ua.phoneModel":[NSString getDeviceName] , @"ua.phoneSystem":[NSString getDeviceSystemVersion]};
-        } else {
-            parameters = @{@"loginName":self.acctextFiled.text , @"password" : self.pwdTectFiled.text ,  @"ua.phoneType" : @(2), @"ua.phoneBrand":@"iPhone" , @"ua.phoneModel":[NSString getDeviceName] , @"ua.phoneSystem":[NSString getDeviceSystemVersion]};
+            [parameters setObject:[kStanderDefault objectForKey:@"GeTuiClientId"] forKey:@"ua.clientId"];
         }
         
         [kStanderDefault setObject:self.pwdTectFiled.text forKey:@"password"];
         [kStanderDefault setObject:self.acctextFiled.text forKey:@"phone"];
         
         [kNetWork requestPOSTUrlString:kLogin parameters:parameters isSuccess:^(NSDictionary * _Nullable responseObject) {
-            
+            [kPlistTools saveDataToFile:responseObject name:@"UserData"];
             NSDictionary *dic = responseObject;
             NSInteger state = [dic[@"state"] integerValue];
             if (state == 0) {

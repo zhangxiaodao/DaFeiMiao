@@ -117,6 +117,7 @@
 		EDFC6F3C1FBAEE1E00377016 /* HeadPortraitView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6E461FBAD84B00377016 /* HeadPortraitView.m */; };
 		EDFC6F3D1FBAEE1E00377016 /* MineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6E481FBAD84B00377016 /* MineTableViewCell.m */; };
 		EDFC6F3E1FBAEE1E00377016 /* OvalCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFC6E4A1FBAD84B00377016 /* OvalCircleView.m */; };
+		EDFD20911FD4E6C700B6FD47 /* Wind.plist in Resources */ = {isa = PBXBuildFile; fileRef = EDFD20901FD4E6C700B6FD47 /* Wind.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -366,6 +367,7 @@
 		EDFC6E8A1FBAD84B00377016 /* AuthcodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthcodeView.m; sourceTree = "<group>"; };
 		EDFC6F461FBAEED100377016 /* AsyncUdpSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsyncUdpSocket.h; sourceTree = "<group>"; };
 		EDFC6F471FBAEED100377016 /* AsyncUdpSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsyncUdpSocket.m; sourceTree = "<group>"; };
+		EDFD20901FD4E6C700B6FD47 /* Wind.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Wind.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -595,6 +597,7 @@
 		EDF4B5651DDAF22800E5AED0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EDFD20901FD4E6C700B6FD47 /* Wind.plist */,
 				EDF4B5661DDAF22800E5AED0 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -1352,6 +1355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDF4B56F1DDAF22800E5AED0 /* Assets.xcassets in Resources */,
+				EDFD20911FD4E6C700B6FD47 /* Wind.plist in Resources */,
 				EDF4B5721DDAF22800E5AED0 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
