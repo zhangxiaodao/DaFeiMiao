@@ -9,7 +9,7 @@
 #import "FailContextViewController.h"
 #import "UserFeedBackViewController.h"
 #import "MineSerivesViewController.h"
-#import "SetServicesViewController.h"
+#import "AllServicesViewController.h"
 
 @interface FailContextViewController ()<UIGestureRecognizerDelegate>
 @end
@@ -178,7 +178,7 @@
 #pragma mark - 重试按钮点击事件
 - (void)againBtnAction {
     
-    SetServicesViewController *allTypeVC = [[SetServicesViewController alloc]init];
+    AllServicesViewController *allTypeVC = [[AllServicesViewController alloc]init];
     allTypeVC.navigationItem.title = @"添加设备";
     [self.navigationController pushViewController:allTypeVC animated:YES];
     
